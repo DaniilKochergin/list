@@ -91,7 +91,7 @@ bool should_inject_fault()
 void fault_injection_point()
 {
     if (should_inject_fault())
-        throw injected_fault("injected fault");
+         throw injected_fault("injected fault");
 }
 
 void faulty_run(std::function<void ()> const& f)

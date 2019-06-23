@@ -902,19 +902,28 @@ TEST(correctness, clear)
 
 TEST(fault_injection, push_back)
 {
+    counted::no_new_instances_guard g;
     faulty_run([] {
-        counted::no_new_instances_guard g;
-
         container c;
         mass_push_back(c, {1, 2, 3, 4});
     });
 }
 
+TEST(fault_injection, copy_ctor)
+{
+    counted::no_new_instances_guard g;
+    faulty_run([] {
+        container c;
+        mass_push_back(c, {1, 2, 3, 4});
+        container c2 = c;
+        expect_eq(c2, {1, 2, 3, 4});
+    });
+}
+
 TEST(fault_injection, assignment_operator)
 {
+    counted::no_new_instances_guard g;
     faulty_run([] {
-        counted::no_new_instances_guard g;
-
         container c;
         mass_push_back(c, {1, 2, 3, 4});
         container c2;

@@ -189,7 +189,12 @@ template<typename T>
 my_list<T>::my_list(const my_list &other)
         : __end(), _end(static_cast<node *>(&__end)), _begin(static_cast<node *>(_end)) {
     for (auto it = other.begin(); it != other.end(); ++it) {
-        push_back(*it);
+       try{
+           push_back(*it);
+       } catch(...){
+           clear();
+           throw;
+       }
     }
 }
 
